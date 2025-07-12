@@ -6,6 +6,208 @@ const initialMessage = {
     output: "Welcome to Yash Gandhi's Portfolio Terminal.\nType \"help\" to see available commands.\n"
 };
 
+const themes = {
+    default: {
+        name: "Default",
+        bg: "bg-gradient-to-br from-gray-900 to-black",
+        text: "text-green-400",
+        terminalBg: "bg-zinc-900",
+        terminalBorder: "border-gray-700",
+        prompt: {
+            user: "text-green-500",
+            symbol: "text-blue-400",
+            cursor: "text-green-400",
+            input: "text-green-200"
+        },
+        output: {
+            bg: "bg-zinc-800/60",
+            border: "border-green-400",
+            text: "text-green-300"
+        }
+    },
+    hacker: {
+        name: "90s Hacker",
+        bg: "bg-black",
+        text: "text-green-400",
+        terminalBg: "bg-gray-950",
+        terminalBorder: "border-green-900",
+        prompt: {
+            user: "text-red-500",
+            symbol: "text-green-700",
+            cursor: "text-green-500",
+            input: "text-green-300"
+        },
+        output: {
+            bg: "bg-gray-900/90",
+            border: "border-red-600",
+            text: "text-green-400"
+        },
+        highlight: "text-red-400",
+        accent: "bg-red-500/10"
+    },
+    ocean: {
+        name: "Deep Ocean",
+        bg: "bg-gradient-to-br from-blue-950 to-indigo-950",
+        text: "text-cyan-200",
+        terminalBg: "bg-blue-950/95",
+        terminalBorder: "border-cyan-700/50",
+        prompt: {
+            user: "text-cyan-400",
+            symbol: "text-blue-400",
+            cursor: "text-cyan-300",
+            input: "text-cyan-100"
+        },
+        output: {
+            bg: "bg-blue-900/50",
+            border: "border-cyan-500/70",
+            text: "text-cyan-100"
+        },
+        highlight: "text-cyan-300",
+        accent: "bg-cyan-500/15"
+    },
+    matrix: {
+        name: "Digital Rain",
+        bg: "bg-gradient-to-br from-black to-green-950",
+        text: "text-emerald-400",
+        terminalBg: "bg-black/95",
+        terminalBorder: "border-emerald-800",
+        prompt: {
+            user: "text-emerald-500",
+            symbol: "text-green-800",
+            cursor: "text-emerald-400",
+            input: "text-emerald-300"
+        },
+        output: {
+            bg: "bg-gray-900/60",
+            border: "border-emerald-700",
+            text: "text-emerald-300"
+        },
+        highlight: "text-emerald-400",
+        accent: "bg-emerald-500/10"
+    },
+    dracula: {
+        name: "Dracula Pro",
+        bg: "bg-gradient-to-br from-purple-950 to-gray-950",
+        text: "text-pink-200",
+        terminalBg: "bg-gray-900/95",
+        terminalBorder: "border-purple-700",
+        prompt: {
+            user: "text-purple-400",
+            symbol: "text-pink-500",
+            cursor: "text-pink-300",
+            input: "text-pink-200"
+        },
+        output: {
+            bg: "bg-gray-800/70",
+            border: "border-purple-500",
+            text: "text-pink-200"
+        },
+        highlight: "text-purple-300",
+        accent: "bg-purple-500/15"
+    },
+    // New themes below
+    solarized: {
+        name: "Solarized Dark",
+        bg: "bg-gradient-to-br from-slate-900 to-slate-950",
+        text: "text-amber-200",
+        terminalBg: "bg-slate-800/90",
+        terminalBorder: "border-amber-700/50",
+        prompt: {
+            user: "text-cyan-400",
+            symbol: "text-amber-600",
+            cursor: "text-amber-300",
+            input: "text-amber-200"
+        },
+        output: {
+            bg: "bg-slate-700/60",
+            border: "border-amber-600/50",
+            text: "text-amber-100"
+        },
+        highlight: "text-cyan-300",
+        accent: "bg-amber-500/10"
+    },
+    nord: {
+        name: "Nord Frost",
+        bg: "bg-gradient-to-br from-gray-900 to-blue-950",
+        text: "text-blue-100",
+        terminalBg: "bg-gray-800/95",
+        terminalBorder: "border-blue-600/50",
+        prompt: {
+            user: "text-blue-400",
+            symbol: "text-cyan-500",
+            cursor: "text-blue-300",
+            input: "text-blue-200"
+        },
+        output: {
+            bg: "bg-gray-700/70",
+            border: "border-cyan-500/50",
+            text: "text-blue-100"
+        },
+        highlight: "text-cyan-300",
+        accent: "bg-cyan-500/10"
+    },
+    monokai: {
+        name: "Monokai Pro",
+        bg: "bg-gradient-to-br from-gray-950 to-gray-900",
+        text: "text-yellow-200",
+        terminalBg: "bg-gray-900/95",
+        terminalBorder: "border-purple-600",
+        prompt: {
+            user: "text-pink-400",
+            symbol: "text-yellow-600",
+            cursor: "text-yellow-300",
+            input: "text-yellow-200"
+        },
+        output: {
+            bg: "bg-gray-800/70",
+            border: "border-pink-500",
+            text: "text-yellow-100"
+        },
+        highlight: "text-pink-300",
+        accent: "bg-pink-500/10"
+    },
+    gruvbox: {
+        name: "Gruvbox Dark",
+        bg: "bg-gradient-to-br from-stone-900 to-amber-950",
+        text: "text-amber-200",
+        terminalBg: "bg-stone-800/95",
+        terminalBorder: "border-amber-700/50",
+        prompt: {
+            user: "text-green-500",
+            symbol: "text-amber-600",
+            cursor: "text-amber-400",
+            input: "text-amber-300"
+        },
+        output: {
+            bg: "bg-stone-700/70",
+            border: "border-green-600/50",
+            text: "text-amber-200"
+        },
+        highlight: "text-green-400",
+        accent: "bg-green-500/10"
+    },
+    tokyonight: {
+        name: "Tokyo Night",
+        bg: "bg-gradient-to-br from-blue-950 to-indigo-950",
+        text: "text-blue-100",
+        terminalBg: "bg-blue-900/95",
+        terminalBorder: "border-indigo-600",
+        prompt: {
+            user: "text-purple-400",
+            symbol: "text-blue-400",
+            cursor: "text-blue-300",
+            input: "text-blue-200"
+        },
+        output: {
+            bg: "bg-blue-800/70",
+            border: "border-purple-500",
+            text: "text-blue-100"
+        },
+        highlight: "text-purple-300",
+        accent: "bg-purple-500/15"
+    }
+};
+
 const commands = {
     help: `📖 Available Commands:
 
@@ -15,7 +217,9 @@ const commands = {
 • contact     → How to get in touch
 • clear       → Clear the terminal
 • echo [text] → Repeat your text
-• date        → Show current date & time`,
+• date        → Show current date & time
+• theme       → Change terminal theme (use: theme set [name])
+• themes      → List available themes`,
 
     about: `👋 Hey, I'm Yash Gandhi.
 
@@ -78,13 +282,20 @@ Tools & Others:
 
 💡 Open to internships, collaborations, and tech discussions. Let's connect!`,
 
-    date: new Date().toString()
+    date: new Date().toString(),
+
+    themes: `🎨 Available Themes:
+
+${Object.entries(themes).map(([key, theme]) => `• ${key} - ${theme.name}`).join('\n')}
+
+💡 Use "theme set [name]" to change theme`
 };
 
 const TerminalPortfolio = () => {
     const [history, setHistory] = useState([initialMessage]);
     const [input, setInput] = useState("");
     const [clearing, setClearing] = useState(false);
+    const [currentTheme, setCurrentTheme] = useState("default");
     const terminalEndRef = useRef(null);
     const idCardRef = useRef(null);
     const typingDelay = 20;
@@ -201,6 +412,25 @@ const TerminalPortfolio = () => {
             return;
         }
 
+        if (lower.startsWith("theme set ")) {
+            const themeName = trimmed.slice(10).toLowerCase();
+            if (themes[themeName]) {
+                setCurrentTheme(themeName);
+                setHistory((prev) => [...prev, { cmd: trimmed, output: "" }]);
+                await simulateTyping(`Theme changed to ${themes[themeName].name}`);
+            } else {
+                setHistory((prev) => [...prev, { cmd: trimmed, output: "" }]);
+                await simulateTyping(`❌ Theme "${themeName}" not found. Type "themes" to see available themes.`);
+            }
+            return;
+        }
+
+        if (lower === "theme" || lower === "themes") {
+            setHistory((prev) => [...prev, { cmd: trimmed, output: "" }]);
+            await simulateTyping(commands.themes);
+            return;
+        }
+
         const output = commands[lower] || `❌ Command not found: ${trimmed}\nType \"help\" to see available commands.`;
         setHistory((prev) => [...prev, { cmd: trimmed, output: "" }]);
         await simulateTyping(output);
@@ -245,8 +475,10 @@ const TerminalPortfolio = () => {
     const cardRotation = physicsState.angle * (180 / Math.PI);
     const cardShadow = calculateShadow(physicsState.angle);
 
+    const theme = themes[currentTheme];
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-green-400 font-mono p-4 flex flex-col md:flex-row items-center gap-4 md:gap-6 overflow-hidden">
+        <div className={`min-h-screen ${theme.bg} ${theme.text} font-mono p-4 flex flex-col md:flex-row items-center gap-4 md:gap-6 overflow-hidden`}>
             {/* ID Card with Static Lanyard */}
             <div
                 className="w-full md:w-2/5 relative flex flex-col items-center mx-auto md:mx-0 select-none cursor-pointer"
@@ -389,7 +621,7 @@ const TerminalPortfolio = () => {
             </div>
 
             {/* Terminal Section */}
-            <div className="w-full md:w-3/5 bg-zinc-900 p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden border border-gray-700">
+            <div className={`w-full md:w-3/5 ${theme.terminalBg} p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden border ${theme.terminalBorder}`}>
                 <style>
                     {`
                         @keyframes blinkCursor {
@@ -399,22 +631,22 @@ const TerminalPortfolio = () => {
                         .blink-fast {
                           animation: blinkCursor 0.7s step-end infinite;
                         }
-                        .scrollbar-green::-webkit-scrollbar {
+                        .scrollbar-custom::-webkit-scrollbar {
                           height: 6px;
                           width: 8px;
                         }
-                        .scrollbar-green::-webkit-scrollbar-track {
+                        .scrollbar-custom::-webkit-scrollbar-track {
                           background: transparent;
                         }
-                        .scrollbar-green::-webkit-scrollbar-thumb {
-                          background-color: #22c55e;
+                        .scrollbar-custom::-webkit-scrollbar-thumb {
+                          background-color: ${theme.output.border.replace('border-', '').split('-')[0]}-500;
                           border-radius: 10px;
                         }
                     `}
                 </style>
 
                 <div className="flex items-center justify-between mb-2">
-                    <h1 className="text-lg text-green-300">~ Yash Terminal Portfolio</h1>
+                    <h1 className={`text-lg ${theme.prompt.user}`}>~ Yash Terminal Portfolio</h1>
                     <div className="flex gap-1">
                         <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                         <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
@@ -423,7 +655,7 @@ const TerminalPortfolio = () => {
                 </div>
 
                 {/* Terminal Output */}
-                <div className="flex-1 overflow-auto pr-2 scrollbar-green" style={{ maxHeight: "calc(80vh - 80px)" }}>
+                <div className="flex-1 overflow-auto pr-2 scrollbar-custom" style={{ maxHeight: "calc(80vh - 80px)" }}>
                     <AnimatePresence>
                         {!clearing &&
                             history.map((entry, idx) => (
@@ -433,17 +665,17 @@ const TerminalPortfolio = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.3 }}
-                                    className="overflow-auto scrollbar-green"
+                                    className="overflow-auto scrollbar-custom"
                                 >
                                     {entry.cmd && (
-                                        <p className="text-green-400 overflow-x-auto scrollbar-green">
-                                            <span className="text-green-500">Yash@portfolio</span>
-                                            <span className="text-blue-400">:~</span>
-                                            <span className="text-green-400">$ </span>
-                                            <span className="text-green-200">{entry.cmd}</span>
+                                        <p className={`${theme.text} overflow-x-auto scrollbar-custom`}>
+                                            <span className={theme.prompt.user}>Yash@portfolio</span>
+                                            <span className={theme.prompt.symbol}>:~</span>
+                                            <span className={theme.prompt.cursor}>$ </span>
+                                            <span className={theme.prompt.input}>{entry.cmd}</span>
                                         </p>
                                     )}
-                                    <pre className="whitespace-pre-wrap text-green-300 bg-zinc-800/60 border-l-4 border-green-400 pl-3 pr-2 py-2 my-2 rounded-md">
+                                    <pre className={`whitespace-pre-wrap ${theme.output.text} ${theme.output.bg} border-l-4 ${theme.output.border} pl-3 pr-2 py-2 my-2 rounded-md`}>
                                         {entry.output}
                                     </pre>
                                 </motion.div>
@@ -453,22 +685,24 @@ const TerminalPortfolio = () => {
                 </div>
 
                 {/* Terminal Input */}
-                <div className="flex items-center mt-2 relative overflow-x-auto scrollbar-green">
-                    <span className="text-green-500 shrink-0">student@portfolio</span>
-                    <span className="text-blue-400 shrink-0">:~</span>
-                    <span className="text-green-400 shrink-0">$ </span>
+                <div className="flex items-center mt-2 relative overflow-x-auto scrollbar-custom">
+                    <span className={`${theme.prompt.user} shrink-0`}>student@portfolio</span>
+                    <span className={`${theme.prompt.symbol} shrink-0`}>:~</span>
+                    <span className={`${theme.prompt.cursor} shrink-0`}>$ </span>
                     <div className="relative flex-1">
                         <input
                             type="text"
-                            className="absolute inset-0 w-full h-full bg-transparent text-green-200 outline-none border-none caret-transparent"
+                            className="absolute inset-0 w-full h-full bg-transparent outline-none border-none caret-transparent"
+                            style={{ color: theme.prompt.input.replace('text-', '') }}
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
                             autoFocus
                         />
-                        <span className="text-green-200">
+                        <span className={theme.prompt.input}>
                             {input}
-                            <span className="bg-green-400 ml-[1px] w-[8px] h-[18px] inline-block align-middle blink-fast"></span>
+                            <span className={`ml-[1px] w-[8px] h-[18px] inline-block align-middle blink-fast`}
+                                style={{ backgroundColor: theme.prompt.cursor.replace('text-', '').split('-')[0] }}></span>
                         </span>
                     </div>
                 </div>
