@@ -1,9 +1,5 @@
-// TerminalPortfolio.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSpring, animated, config } from "@react-spring/web";
-
-const avatarURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Sample_User_Icon.png/480px-Sample_User_Icon.png";
 
 const initialMessage = {
     cmd: "",
@@ -23,62 +19,67 @@ const commands = {
 
     about: `👋 Hey, I'm Yash Gandhi.
 
-I'm a passionate Full Stack Developer who enjoys building meaningful digital experiences.
+I'm a passionate Full Stack Developer and Computer Science student who enjoys building meaningful digital experiences.
 
-With a strong web foundation, I create apps that are scalable, responsive, and accessible — from frontend interfaces to backend APIs. I love solving real-world problems through code!`,
+Currently pursuing my Computer Science degree while working on exciting projects. I love solving real-world problems through code and always eager to learn new technologies!`,
 
     skills: `💻 Tech Stack I Use:
 
 Frontend:
-• React.js
+• React.js, Next.js
 • HTML5, CSS3, JavaScript (ES6+)
-• Tailwind CSS
+• Tailwind CSS, Material-UI
 • Responsive UI & Accessibility
 
 Backend:
 • Node.js, Express.js
-• MongoDB (via Mongoose)
-• REST APIs, Auth (JWT/OAuth)
+• MongoDB, PostgreSQL
+• REST APIs, GraphQL
+• Authentication & Security
 
-Tools:
+Tools & Others:
 • Git & GitHub
-• Figma (UI/UX)
-• Firebase, Netlify, Vercel
-• Postman, Vite, ESLint, Prettier`,
+• Docker, AWS
+• Figma (UI/UX Design)
+• Postman, VS Code`,
 
     projects: `🚀 Featured Projects:
 
-📱 PostX
-• MERN social app for sharing posts
-• Real-time like/edit, profile feed, uploads
+📱 PostX - Social Media App
+• MERN stack social platform
+• Real-time messaging & notifications
+• Image uploads & user profiles
 
-📖 Shikshapatri Tracker
-• MERN-based app to track daily spiritual reading
-• Includes Gujarati TTS & PDF sync
+📖 Study Tracker
+• Student progress tracking app
+• Course management & scheduling
+• Grade analytics & insights
 
-📊 Mutual Fund Dashboard
-• React + Recharts-based fund tracker
-• Live NAVs, charts, holdings — made for clients/distributors
+📊 Campus Dashboard
+• University data visualization
+• Student performance metrics
+• React + D3.js charts
 
 🧾 Resume Builder
-• Resume builder with live preview templates
-• Export clean styled PDFs
+• Professional resume generator
+• Multiple templates & PDF export
+• Real-time preview & editing
 
 💻 Portfolio Terminal
-• This very terminal-based portfolio using React + Tailwind!`,
+• This interactive terminal interface
+• React + Framer Motion animations`,
 
     contact: `📬 Get In Touch:
 
-• Email: yashgandhi.dev@gmail.com
-• GitHub: github.com/yashgandhi
-• LinkedIn: linkedin.com/in/yashgandhi
+• Email: yash.gandhi@university.edu
+• GitHub: github.com/yashgandhi-dev
+• LinkedIn: linkedin.com/in/yashgandhi-cs
+• University: Computer Science Dept.
 
-💡 Open to collaboration, freelance, internships, or a tech conversation. Reach out!`,
+💡 Open to internships, collaborations, and tech discussions. Let's connect!`,
 
     date: new Date().toString()
 };
-
-
 
 const TerminalPortfolio = () => {
     const [history, setHistory] = useState([initialMessage]);
@@ -88,14 +89,84 @@ const TerminalPortfolio = () => {
     const idCardRef = useRef(null);
     const typingDelay = 20;
 
-    const [{ x, rotateZ, rotateY, rotateX, scale }, api] = useSpring(() => ({
-        x: 0,
-        rotateZ: 0,
-        rotateY: 0,
-        rotateX: 0,
-        scale: 1,
-        config: config.default
-    }));
+    // Physics state with controlled parameters
+    const [physicsState, setPhysicsState] = useState({
+        angle: 0,
+        velocity: 0,
+        isSwinging: false,
+        lastTime: 0
+    });
+
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const animationFrameRef = useRef();
+
+    // Physics constants for controlled movement
+    const GRAVITY = 0.4; // Reduced gravity for less swing
+    const DAMPING = 0.99; // Higher damping for quicker stop
+    const LENGTH = 100;
+    const MAX_ANGLE = 0.3; // Limit maximum swing angle (in radians)
+    const MIN_VELOCITY = 0.001;
+
+    // Mouse tracking for subtle parallax effect
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            setMousePos({ x, y });
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
+    // Physics simulation with controlled motion
+    useEffect(() => {
+        const updatePhysics = (currentTime) => {
+            setPhysicsState(prev => {
+                if (!prev.isSwinging && Math.abs(prev.velocity) < MIN_VELOCITY) {
+                    return prev;
+                }
+
+                const deltaTime = currentTime - prev.lastTime;
+                const normalizedDelta = Math.min(deltaTime / 16, 1);
+
+                // Pendulum physics with angle limiting
+                const acceleration = -(GRAVITY / LENGTH) * Math.sin(prev.angle);
+                let newVelocity = (prev.velocity + acceleration * normalizedDelta) * DAMPING;
+                let newAngle = prev.angle + newVelocity * normalizedDelta;
+
+                // Apply angle limits
+                if (Math.abs(newAngle) > MAX_ANGLE) {
+                    newAngle = newAngle > 0 ? MAX_ANGLE : -MAX_ANGLE;
+                    newVelocity = 0; // Stop at max angle
+                }
+
+                // Stop swinging when velocity is very small
+                const shouldStop = Math.abs(newVelocity) < MIN_VELOCITY && Math.abs(newAngle) < 0.01;
+
+                return {
+                    angle: shouldStop ? 0 : newAngle,
+                    velocity: shouldStop ? 0 : newVelocity,
+                    isSwinging: !shouldStop,
+                    lastTime: currentTime
+                };
+            });
+
+            if (physicsState.isSwinging || Math.abs(physicsState.velocity) >= MIN_VELOCITY) {
+                animationFrameRef.current = requestAnimationFrame(updatePhysics);
+            }
+        };
+
+        if (physicsState.isSwinging) {
+            animationFrameRef.current = requestAnimationFrame(updatePhysics);
+        }
+
+        return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [physicsState.isSwinging]);
 
     const simulateTyping = async (text) => {
         let displayed = "";
@@ -142,17 +213,15 @@ const TerminalPortfolio = () => {
         }
     };
 
-    const swing = (impulse = 1) => {
-        api.start({
-            to: async (next) => {
-                await next({ x: 15 * impulse, rotateZ: 12, rotateY: 10, rotateX: 8, scale: 1.03 });
-                await next({ x: -10 * impulse, rotateZ: -10, rotateY: -8, rotateX: -6, scale: 1 });
-                await next({ x: 6 * impulse, rotateZ: 6, rotateY: 4, rotateX: 4 });
-                await next({ x: -3 * impulse, rotateZ: -3, rotateY: -2, rotateX: -2 });
-                await next({ x: 1, rotateZ: 1, rotateY: 1, rotateX: 0.5 });
-                await next({ x: 0, rotateZ: 0, rotateY: 0, rotateX: 0, scale: 1 });
-            }
-        });
+    // Trigger controlled swing
+    const swingCard = (impulse = 1) => {
+        const currentTime = performance.now();
+        setPhysicsState(prev => ({
+            ...prev,
+            velocity: prev.velocity + (impulse * 0.1 * (Math.random() > 0.5 ? 1 : -1)),
+            isSwinging: true,
+            lastTime: currentTime
+        }));
     };
 
     useEffect(() => {
@@ -160,115 +229,201 @@ const TerminalPortfolio = () => {
     }, [history]);
 
     useEffect(() => {
-        swing(0.9);
+        // Gentle initial swing after load
+        const timer = setTimeout(() => swingCard(0.5), 1000);
+        return () => clearTimeout(timer);
     }, []);
 
-    useEffect(() => {
-        const handleOrientation = (event) => {
-            const { beta, gamma } = event;
-            if (window.innerWidth <= 768) {
-                api.start({
-                    rotateX: beta / 4,
-                    rotateY: gamma / 4
-                });
-            }
-        };
-        window.addEventListener("deviceorientation", handleOrientation);
-        return () => window.removeEventListener("deviceorientation", handleOrientation);
-    }, [api]);
+    // Calculate dynamic shadow based on angle
+    const calculateShadow = (angle) => {
+        const shadowX = Math.sin(angle) * 10;
+        const shadowY = Math.abs(Math.cos(angle)) * 5 + 10;
+        const blur = Math.abs(angle) * 3 + 15;
+        return `${shadowX}px ${shadowY}px ${blur}px rgba(0,0,0,0.3)`;
+    };
+
+    const cardRotation = physicsState.angle * (180 / Math.PI);
+    const cardShadow = calculateShadow(physicsState.angle);
 
     return (
-        <div className="min-h-screen bg-black text-green-500 font-mono p-4 flex flex-col md:flex-row items-start gap-6 md:gap-10 overflow-hidden">
-            <div className="w-full md:w-2/5 relative flex flex-col items-center mx-auto md:mx-0 mt-4 md:mt-0 select-none cursor-pointer" onClick={() => swing(1.2)}>
-                <div className="w-6 h-6 rounded-full bg-gray-700 mb-1 flex items-center justify-center">
-                    <div className="w-4 h-4 rounded-full bg-gray-500"></div>
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-green-400 font-mono p-4 flex flex-col md:flex-row items-center gap-4 md:gap-6 overflow-hidden">
+            {/* ID Card with Static Lanyard */}
+            <div
+                className="w-full md:w-2/5 relative flex flex-col items-center mx-auto md:mx-0 select-none cursor-pointer"
+                onClick={() => swingCard(1.2)}
+                style={{ perspective: '1000px' }}
+            >
+                {/* Ceiling Hook */}
+                <div className="w-10 h-10 bg-slate-700 rounded-full mb-1 shadow-lg flex items-center justify-center z-10">
+                    <div className="w-6 h-6 bg-slate-600 rounded-full shadow-inner"></div>
                 </div>
-                <div className="flex flex-col items-center">
-                    <div className="w-4 h-4 bg-gray-400 rounded-full mb-1"></div>
-                    <div className="w-4 h-4 bg-gray-400 rounded-full mb-1"></div>
-                </div>
-                <animated.div
-                    style={{ transform: x.to((v) => `translateX(${v}px)`), width: '3px', height: '70px' }}
-                    className="bg-gradient-to-b from-gray-400 to-gray-600 origin-top rounded-full shadow-md"
-                />
-                <animated.div
-                    className="w-5 h-5 bg-gradient-to-br from-gray-500 to-gray-700 rounded-full -mt-2 z-10 shadow-lg border border-white"
-                    style={{ transform: x.to((v) => `translateX(${v}px)`) }}
-                />
-                <animated.div
-                    ref={idCardRef}
-                    className="w-60 h-90 bg-white bg-opacity-90 border border-gray-400 rounded-lg origin-top mt-2 flex flex-col items-center justify-start overflow-hidden shadow-2xl relative backdrop-blur-md"
+
+                {/* Static Lanyard Rod (no animation) */}
+                <div
                     style={{
-                        transform: x.to(
-                            (v) => `translateX(${v}px) rotateZ(${rotateZ.get()}deg) rotateX(${rotateX.get()}deg) rotateY(${rotateY.get()}deg) scale(${scale.get()})`
-                        )
+                        width: '14px',
+                        height: '80px',
+                        background: 'linear-gradient(to bottom, #e53e3e, #b91c1c)',
+                        transformOrigin: 'top center',
+                        boxShadow: 'inset 1px 0 3px rgba(255,255,255,0.2), inset -1px 0 3px rgba(0,0,0,0.3)',
+                        borderRadius: '0 0 4px 4px',
+                        zIndex: 10
+                    }}
+                    className="origin-top"
+                >
+                    {/* Lanyard texture */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                </div>
+
+                {/* Lanyard Clip */}
+                <div className="w-16 h-8 bg-gradient-to-b from-slate-600 to-slate-800 rounded-lg -mt-1 shadow-md relative border border-slate-500">
+                    <div className="absolute inset-1 bg-gradient-to-b from-slate-500 to-slate-700 rounded-sm"></div>
+                </div>
+
+                {/* ID Card */}
+                <motion.div
+                    ref={idCardRef}
+                    className="w-64 h-96 bg-white rounded-xl origin-top flex flex-col items-center justify-start overflow-hidden relative"
+                    animate={{
+                        rotateZ: cardRotation,
+                        rotateX: mousePos.y * 2,
+                        rotateY: mousePos.x * 2,
+                    }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 250,
+                        damping: 25,
+                        mass: 0.8
+                    }}
+                    style={{
+                        boxShadow: cardShadow,
+                        background: 'linear-gradient(145deg, #ffffff, #f8fafc)',
+                        border: '3px solid #e2e8f0',
+                        filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
                     }}
                 >
+                    {/* Card Shine Effects */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
 
-                    <div className="flex justify-center mt-4">
-                        <div className="w-30 h-30 border-2 border-blue-600 rounded-full overflow-hidden bg-gray-100 shadow-inner">
-                            <img
-                                src="/avtarImage.JPG"
-                                alt="ID Avatar"
-                                className="w-full h-full object-cover rounded-full"
-                            />
+                    {/* University Header */}
+                    <div className="w-full h-16 bg-gradient-to-r from-blue-700 to-blue-800 flex items-center justify-center relative">
+                        <h3 className="text-white font-bold text-sm tracking-wider z-10">UNIVERSITY ID</h3>
+                        <div className="absolute top-2 right-2 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <div className="w-5 h-5 bg-white/50 rounded-full flex items-center justify-center">
+                                <span className="text-blue-800 text-xs font-bold">CSE</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="p-4 text-center text-gray-800">
-                        <h2 className="text-lg font-bold">Yash Gandhi</h2>
-                        <p className="text-xs mt-1">STUDENT ID</p>
-                        <div className="mt-2 text-xs">
-                            <p>Computer Science & engineering</p>
-                            <p className="mt-1">EnrollMent_No : 2301201713</p>
-                        </div>
-                        <div className="mt-3 h-8 w-full bg-white border border-gray-300 flex items-center justify-center">
-                            <div className="flex h-full items-center">
-                                {[...Array(20)].map((_, i) => (
-                                    <div key={i} className="h-full w-1 bg-black mr-0.5" style={{ height: `${Math.random() * 80 + 20}%` }} />
-                                ))}
-                            </div>
-                        </div>
-                        <div className="mt-2 border-t border-gray-300 pt-1">
-                            <div className="flex items-center gap-2">
-                                <p className="text-xs text-left">Signature:</p>
-                                <div className="h-6 w-24 border-b border-black">
-                                    <span className="italic font-[cursive] text-sm tracking-wide">yash</span>
+                    {/* Student Photo Section */}
+                    <div className="flex justify-center mt-4 mb-2 relative">
+                        <div className="w-28 h-28 border-3 border-blue-700 rounded-full overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg relative">
+                            <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center rounded-full">
+                                <div className="w-24 h-24 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full overflow-hidden shadow-inner">
+                                    <img
+                                        src="/avtarImage.JPG"
+                                        alt="Yash Gandhi"
+                                        className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ddd'/%3E%3Ctext x='50%' y='50%' font-size='40' text-anchor='middle' dominant-baseline='middle' fill='%23666'%3E🎓%3C/text%3E%3C/svg%3E"
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                </animated.div>
+
+                    {/* Student Information */}
+                    <div className="px-4 pb-4 text-center text-gray-800 w-full">
+                        <h2 className="text-2xl font-bold mb-1 text-gray-900">Yash Gandhi</h2>
+                        <p className="text-xs font-semibold text-blue-800 mb-1">COMPUTER SCIENCE & ENGINEERING</p>
+                        <p className="text-xs text-gray-600 mb-4">Class of 2025</p>
+
+                        {/* Student Details */}
+                        <div className="grid grid-cols-2 gap-2 text-xs mb-4">
+                            <div className="text-left">
+                                <p className="font-semibold text-gray-700">Enrollment No:</p>
+                                <p className="text-gray-600">2301201713</p>
+                            </div>
+                            <div className="text-left">
+                                <p className="font-semibold text-gray-700">Status:</p>
+                                <p className="text-green-600 font-semibold">ACTIVE</p>
+                            </div>
+                            <div className="text-left">
+                                <p className="font-semibold text-gray-700">GPA:</p>
+                                <p className="text-gray-600">8.13/10</p>
+                            </div>
+                            <div className="text-left">
+                                <p className="font-semibold text-gray-700">Expires:</p>
+                                <p className="text-gray-600">May 2027</p>
+                            </div>
+                        </div>
+
+                        {/* Barcode */}
+                        <div className="mt-2 h-12 w-full bg-white border border-gray-300 rounded flex items-center justify-center overflow-hidden px-2">
+                            <div className="flex h-full items-center w-full justify-center">
+                                {[...Array(50)].map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className="bg-black mr-0.5"
+                                        style={{
+                                            width: `${Math.random() > 0.6 ? 2 : 1}px`,
+                                            height: `${Math.random() > 0.2 ? Math.random() * 70 + 30 : 10}%`,
+                                            backgroundColor: i % 8 === 0 ? '#1f2937' : '#000'
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Card Footer */}
+                        <div className="mt-3 pt-2 border-t border-gray-300 text-xs">
+                            <div className="flex items-center justify-center gap-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                <span className="text-gray-600">VALID STUDENT</span>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
-            <div className="w-full md:w-3/5 bg-zinc-900 p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden">
+
+            {/* Terminal Section */}
+            <div className="w-full md:w-3/5 bg-zinc-900 p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden border border-gray-700">
                 <style>
                     {`
-      @keyframes blinkCursor {
-        0%, 49% { opacity: 1; }
-        50%, 100% { opacity: 0; }
-      }
-      .blink-fast {
-        animation: blinkCursor 0.4s step-end infinite;
-      }
-      .scrollbar-green::-webkit-scrollbar {
-        height: 6px;
-        width: 8px;
-      }
-      .scrollbar-green::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .scrollbar-green::-webkit-scrollbar-thumb {
-        background-color: #22c55e; /* Tailwind green-500 */
-        border-radius: 10px;
-      }
-    `}
+                        @keyframes blinkCursor {
+                          0%, 49% { opacity: 1; }
+                          50%, 100% { opacity: 0; }
+                        }
+                        .blink-fast {
+                          animation: blinkCursor 0.7s step-end infinite;
+                        }
+                        .scrollbar-green::-webkit-scrollbar {
+                          height: 6px;
+                          width: 8px;
+                        }
+                        .scrollbar-green::-webkit-scrollbar-track {
+                          background: transparent;
+                        }
+                        .scrollbar-green::-webkit-scrollbar-thumb {
+                          background-color: #22c55e;
+                          border-radius: 10px;
+                        }
+                    `}
                 </style>
 
-                <h1 className="text-xl mb-2">~ Yash Terminal Portfolio</h1>
+                <div className="flex items-center justify-between mb-2">
+                    <h1 className="text-lg text-green-300">~ Yash Terminal Portfolio</h1>
+                    <div className="flex gap-1">
+                        <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                        <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    </div>
+                </div>
 
-                {/* Scrollable terminal history output */}
-                <div className="flex-1 overflow-auto pr-2 scrollbar-green" style={{ maxHeight: "calc(80vh - 60px)" }}>
+                {/* Terminal Output */}
+                <div className="flex-1 overflow-auto pr-2 scrollbar-green" style={{ maxHeight: "calc(80vh - 80px)" }}>
                     <AnimatePresence>
                         {!clearing &&
                             history.map((entry, idx) => (
@@ -282,27 +437,27 @@ const TerminalPortfolio = () => {
                                 >
                                     {entry.cmd && (
                                         <p className="text-green-400 overflow-x-auto scrollbar-green">
-                                            Yash@portfolio:~/desktop${" "}
+                                            <span className="text-green-500">Yash@portfolio</span>
+                                            <span className="text-blue-400">:~</span>
+                                            <span className="text-green-400">$ </span>
                                             <span className="text-green-200">{entry.cmd}</span>
                                         </p>
                                     )}
-                                    <pre className="whitespace-pre-wrap text-green-300 bg-zinc-800/60 border-l-4 border-green-400 pl-3 pr-2 py-2 my-2 rounded-md shadow-inner">
+                                    <pre className="whitespace-pre-wrap text-green-300 bg-zinc-800/60 border-l-4 border-green-400 pl-3 pr-2 py-2 my-2 rounded-md">
                                         {entry.output}
                                     </pre>
-
                                 </motion.div>
                             ))}
                     </AnimatePresence>
-
                     <div ref={terminalEndRef} />
                 </div>
 
-                {/* Terminal input with thick blinking green cursor */}
+                {/* Terminal Input */}
                 <div className="flex items-center mt-2 relative overflow-x-auto scrollbar-green">
-                    <span className="text-green-400 shrink-0">Yash@portfolio:~/desktop$&nbsp;</span>
-
+                    <span className="text-green-500 shrink-0">student@portfolio</span>
+                    <span className="text-blue-400 shrink-0">:~</span>
+                    <span className="text-green-400 shrink-0">$ </span>
                     <div className="relative flex-1">
-                        {/* Hidden input to accept typing */}
                         <input
                             type="text"
                             className="absolute inset-0 w-full h-full bg-transparent text-green-200 outline-none border-none caret-transparent"
@@ -311,17 +466,13 @@ const TerminalPortfolio = () => {
                             onKeyDown={handleKeyDown}
                             autoFocus
                         />
-
-                        {/* Display typed text with blinking block */}
                         <span className="text-green-200">
                             {input}
-                            <span className="bg-green-400 ml-[1px] w-[8px] h-[20px] inline-block align-middle blink-fast"></span>
+                            <span className="bg-green-400 ml-[1px] w-[8px] h-[18px] inline-block align-middle blink-fast"></span>
                         </span>
                     </div>
                 </div>
             </div>
-
-
         </div>
     );
 };
