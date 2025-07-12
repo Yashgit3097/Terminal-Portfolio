@@ -27,44 +27,45 @@ const themes = {
     },
     hacker: {
         name: "90s Hacker",
-        bg: "bg-black",
-        text: "text-green-400",
-        terminalBg: "bg-gray-950",
-        terminalBorder: "border-green-900",
+        bg: "bg-gradient-to-br from-[#000000] to-[#0a0f0a]", // pure black to terminal green-black
+        text: "text-[#39ff14]", // classic hacker green
+        terminalBg: "bg-[#0b0f0b]/95", // deep greenish black
+        terminalBorder: "border-[#00ff00]/20", // glowing green edge
         prompt: {
-            user: "text-red-500",
-            symbol: "text-green-700",
-            cursor: "text-green-500",
-            input: "text-green-300"
+            user: "text-[#ff4d4d]",        // vibrant red username
+            symbol: "text-[#00cc00]",      // neon hacker green symbol
+            cursor: "text-[#39ff14]",      // brighter green cursor
+            input: "text-[#a0ffb0]"        // pale greenish input
         },
         output: {
-            bg: "bg-gray-900/90",
-            border: "border-red-600",
-            text: "text-green-400"
+            bg: "bg-[#0e0f0e]/85",          // dark charcoal green tone
+            border: "border-[#ff4d4d]/40",  // soft hacker red border
+            text: "text-[#7fffd4]"          // light mint green for better readability
         },
-        highlight: "text-red-400",
-        accent: "bg-red-500/10"
+        highlight: "text-[#ff6666]",        // bright warning red highlight
+        accent: "bg-[#ff4d4d]/10"           // hover or background warning glow
     },
-    ocean: {
-        name: "Deep Ocean",
-        bg: "bg-gradient-to-br from-blue-950 to-indigo-950",
-        text: "text-cyan-200",
-        terminalBg: "bg-blue-950/95",
-        terminalBorder: "border-cyan-700/50",
+    toxicgreenwave: {
+        name: "Toxic Greenwave",
+        bg: "bg-gradient-to-br from-[#020c02] to-[#0a1400]",
+        text: "text-[#ccff00]", // toxic yellow-green
+        terminalBg: "bg-[#0b1200]/90",
+        terminalBorder: "border-[#aaff00]/30",
         prompt: {
-            user: "text-cyan-400",
-            symbol: "text-blue-400",
-            cursor: "text-cyan-300",
-            input: "text-cyan-100"
+            user: "text-[#99ff00]",    // electric green
+            symbol: "text-[#ccff33]",  // hacker neon
+            cursor: "text-[#dfff66]",  // brighter glow
+            input: "text-[#f0ffc0]"    // light toxic input
         },
         output: {
-            bg: "bg-blue-900/50",
-            border: "border-cyan-500/70",
-            text: "text-cyan-100"
+            bg: "bg-[#131a00]/80",
+            border: "border-[#99ff00]/30",
+            text: "text-[#eaff9d]"
         },
-        highlight: "text-cyan-300",
-        accent: "bg-cyan-500/15"
+        highlight: "text-[#ccff33]",
+        accent: "bg-[#ccff00]/10"
     },
+
     matrix: {
         name: "Digital Rain",
         bg: "bg-gradient-to-br from-black to-green-950",
@@ -105,7 +106,6 @@ const themes = {
         highlight: "text-purple-300",
         accent: "bg-purple-500/15"
     },
-    // New themes below
     solarized: {
         name: "Solarized Dark",
         bg: "bg-gradient-to-br from-slate-900 to-slate-950",
@@ -186,28 +186,48 @@ const themes = {
         highlight: "text-green-400",
         accent: "bg-green-500/10"
     },
-    tokyonight: {
-        name: "Tokyo Night",
-        bg: "bg-gradient-to-br from-blue-950 to-indigo-950",
-        text: "text-blue-100",
-        terminalBg: "bg-blue-900/95",
-        terminalBorder: "border-indigo-600",
+    cyberbloom: {
+        name: "Cyber Bloom",
+        bg: "bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e]",
+        text: "text-pink-200",
+        terminalBg: "bg-[#1c1c3c]/95",
+        terminalBorder: "border-[#ff00c8]/30",
         prompt: {
-            user: "text-purple-400",
-            symbol: "text-blue-400",
-            cursor: "text-blue-300",
-            input: "text-blue-200"
+            user: "text-[#ffd700]",     // gold
+            symbol: "text-[#00ffff]",   // neon cyan
+            cursor: "text-[#ff4ff8]",   // hot pink
+            input: "text-[#ffe6fb]"     // soft pale pink
         },
         output: {
-            bg: "bg-blue-800/70",
-            border: "border-purple-500",
-            text: "text-blue-100"
+            bg: "bg-[#1f1a3c]/80",        // dark indigo
+            border: "border-[#ff4ff8]/30",
+            text: "text-[#ffcaf7]"
         },
-        highlight: "text-purple-300",
-        accent: "bg-purple-500/15"
+        highlight: "text-[#00ffff]",     // bright neon blue
+        accent: "bg-[#00ffff]/10"
+    }
+    ,
+    neonwave: {
+        name: "Neon Wave",
+        bg: "bg-gradient-to-br from-black to-fuchsia-900",
+        text: "text-fuchsia-200",
+        terminalBg: "bg-black/90",
+        terminalBorder: "border-cyan-500",
+        prompt: {
+            user: "text-cyan-300",
+            symbol: "text-pink-500",
+            cursor: "text-fuchsia-400",
+            input: "text-fuchsia-200"
+        },
+        output: {
+            bg: "bg-gray-800/70",
+            border: "border-pink-400",
+            text: "text-fuchsia-300"
+        },
+        highlight: "text-pink-300",
+        accent: "bg-pink-600/10"
     }
 };
-
 const commands = {
     help: `📖 Available Commands:
 
