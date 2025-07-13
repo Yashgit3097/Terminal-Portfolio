@@ -13,6 +13,7 @@ const themes = {
         text: "text-green-400",
         terminalBg: "bg-zinc-900",
         terminalBorder: "border-gray-700",
+        terminalShadow: "shadow-[0_6px_20px_rgba(0,0,0,0.7),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-green-500",
             symbol: "text-blue-400",
@@ -31,6 +32,7 @@ const themes = {
         text: "text-[#39ff14]",
         terminalBg: "bg-[#0b0f0b]/95",
         terminalBorder: "border-[#00ff00]/20",
+        terminalShadow: "shadow-[0_8px_24px_rgba(0,255,0,0.2),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-[#ff4d4d]",
             symbol: "text-[#00cc00]",
@@ -48,14 +50,15 @@ const themes = {
     toxicgreenwave: {
         name: "Toxic Greenwave",
         bg: "bg-gradient-to-br from-[#020c02] to-[#0a1400]",
-        text: "text-[#ccff00]", // toxic yellow-green
+        text: "text-[#ccff00]",
         terminalBg: "bg-[#0b1200]/90",
         terminalBorder: "border-[#aaff00]/30",
+        terminalShadow: "shadow-[0_8px_24px_rgba(170,255,0,0.2),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
-            user: "text-[#99ff00]",    // electric green
-            symbol: "text-[#ccff33]",  // hacker neon
-            cursor: "text-[#dfff66]",  // brighter glow
-            input: "text-[#f0ffc0]"    // light toxic input
+            user: "text-[#99ff00]",
+            symbol: "text-[#ccff33]",
+            cursor: "text-[#dfff66]",
+            input: "text-[#f0ffc0]"
         },
         output: {
             bg: "bg-[#131a00]/80",
@@ -71,6 +74,7 @@ const themes = {
         text: "text-emerald-400",
         terminalBg: "bg-black/95",
         terminalBorder: "border-emerald-800",
+        terminalShadow: "shadow-[0_8px_24px_rgba(0,255,0,0.25),_inset_0_1px_3px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-emerald-500",
             symbol: "text-green-800",
@@ -91,6 +95,7 @@ const themes = {
         text: "text-pink-200",
         terminalBg: "bg-gray-900/95",
         terminalBorder: "border-purple-700",
+        terminalShadow: "shadow-[0_8px_24px_rgba(200,100,255,0.2),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-purple-400",
             symbol: "text-pink-500",
@@ -111,6 +116,7 @@ const themes = {
         text: "text-amber-200",
         terminalBg: "bg-slate-800/90",
         terminalBorder: "border-amber-700/50",
+        terminalShadow: "shadow-[0_8px_24px_rgba(255,200,50,0.15),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-cyan-400",
             symbol: "text-amber-600",
@@ -125,32 +131,36 @@ const themes = {
         highlight: "text-cyan-300",
         accent: "bg-amber-500/10"
     },
-    nord: {
-        name: "Nord Frost",
-        bg: "bg-gradient-to-br from-gray-900 to-blue-950",
-        text: "text-blue-100",
-        terminalBg: "bg-gray-800/95",
-        terminalBorder: "border-blue-600/50",
+    midnightwave: {
+        name: "Midnight Wave",
+        bg: "bg-gradient-to-br from-[#0a0f1f] via-[#1c1c3c] to-[#000000]", // rich midnight blue to black
+        text: "text-blue-200",
+        terminalBg: "bg-[#101624]/90", // semi-transparent dark glass
+        terminalBorder: "border-[#3b82f6]/40", // Tailwind blue-500 glow
+        terminalShadow: "shadow-[0_15px_35px_rgba(59,130,246,0.25),_inset_0_3px_5px_rgba(255,255,255,0.06)]",
         prompt: {
-            user: "text-blue-400",
-            symbol: "text-cyan-500",
-            cursor: "text-blue-300",
+            user: "text-[#60a5fa]",     // soft neon blue (blue-400)
+            symbol: "text-[#38bdf8]",   // sky blue accent
+            cursor: "text-blue-300",    // gentle typing color
             input: "text-blue-200"
         },
         output: {
-            bg: "bg-gray-700/70",
-            border: "border-cyan-500/50",
-            text: "text-blue-100"
+            bg: "bg-[#1e293b]/80",      // dark bluish card
+            border: "border-blue-400/50",
+            text: "text-sky-100"
         },
-        highlight: "text-cyan-300",
-        accent: "bg-cyan-500/10"
-    },
+        highlight: "text-sky-300",
+        accent: "bg-blue-500/10"
+    }
+
+    ,
     monokai: {
         name: "Monokai Pro",
         bg: "bg-gradient-to-br from-gray-950 to-gray-900",
         text: "text-yellow-200",
         terminalBg: "bg-gray-900/95",
         terminalBorder: "border-purple-600",
+        terminalShadow: "shadow-[0_8px_24px_rgba(255,100,200,0.15),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-pink-400",
             symbol: "text-yellow-600",
@@ -171,6 +181,7 @@ const themes = {
         text: "text-amber-200",
         terminalBg: "bg-stone-800/95",
         terminalBorder: "border-amber-700/50",
+        terminalShadow: "shadow-[0_8px_24px_rgba(255,180,50,0.2),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-green-500",
             symbol: "text-amber-600",
@@ -191,6 +202,7 @@ const themes = {
         text: "text-pink-200",
         terminalBg: "bg-[#1c1c3c]/95",
         terminalBorder: "border-[#ff00c8]/30",
+        terminalShadow: "shadow-[0_8px_24px_rgba(255,0,200,0.2),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-[#ffd700]",
             symbol: "text-[#00ffff]",
@@ -211,6 +223,7 @@ const themes = {
         text: "text-fuchsia-200",
         terminalBg: "bg-black/90",
         terminalBorder: "border-cyan-500",
+        terminalShadow: "shadow-[0_8px_24px_rgba(255,0,255,0.2),_inset_0_1px_2px_rgba(255,255,255,0.05)]",
         prompt: {
             user: "text-cyan-300",
             symbol: "text-pink-500",
@@ -226,6 +239,7 @@ const themes = {
         accent: "bg-pink-600/10"
     }
 };
+
 const commands = {
     help: `📖 Available Commands:
 
@@ -643,7 +657,7 @@ const TerminalPortfolio = () => {
             </div>
 
             {/* Terminal Section */}
-            <div className={`w-full md:w-3/5 ${theme.terminalBg} p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden border ${theme.terminalBorder}`}>
+            <div className={`w-full md:w-3/5 ${theme.terminalBg} ${theme.terminalShadow} p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden border ${theme.terminalBorder}`}>
                 <style>
                     {`
             @keyframes blinkCursor {
@@ -664,12 +678,12 @@ const TerminalPortfolio = () => {
               background-color: ${theme.output.border.replace('border-', '').split('-')[0]}-500;
               border-radius: 10px;
             }
-              @media (max-width: 640px) {
-  .terminal {
-    font-size: 0.875rem;
-    padding: 1rem;
-  }
-}
+            @media (max-width: 640px) {
+              .terminal {
+                font-size: 0.875rem;
+                padding: 1rem;
+              }
+            }
         `}
                 </style>
 
@@ -742,6 +756,7 @@ const TerminalPortfolio = () => {
                     </div>
                 </div>
             </div>
+
 
         </div>
     );
