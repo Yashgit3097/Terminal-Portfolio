@@ -47,6 +47,27 @@ const themes = {
         highlight: "text-[#ff6666]",
         accent: "bg-[#ff4d4d]/10"
     },
+    hackermac: {
+        name: "HackerMac OS",
+        bg: "bg-gradient-to-br from-black via-[#0b0f0b] to-[#1a1a1a]", // dark with subtle green tints
+        text: "text-lime-300", // bright green text
+        terminalBg: "bg-[#0e0e0e]/95", // deep matte black
+        terminalBorder: "border-lime-400/30",
+        terminalShadow: "shadow-[0_15px_35px_rgba(132,255,132,0.15),_inset_0_3px_6px_rgba(0,255,0,0.06)]", // 3D green-glow
+        prompt: {
+            user: "text-[#00ffcc]",   // teal Apple-style username
+            symbol: "text-[#39ff14]", // neon hacker green
+            cursor: "text-lime-300",  // iMac-soft green
+            input: "text-lime-200"
+        },
+        output: {
+            bg: "bg-[#111]/80",       // near-black for content
+            border: "border-[#39ff14]/40", // glowing green bar
+            text: "text-lime-100"
+        },
+        highlight: "text-[#00ffcc]",   // iMac aqua highlight
+        accent: "bg-[#39ff14]/10"
+    },
     toxicgreenwave: {
         name: "Toxic Greenwave",
         bg: "bg-gradient-to-br from-[#020c02] to-[#0a1400]",
@@ -657,7 +678,18 @@ const TerminalPortfolio = () => {
             </div>
 
             {/* Terminal Section */}
-            <div className={`w-full md:w-3/5 ${theme.terminalBg} ${theme.terminalShadow} p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden border ${theme.terminalBorder}`}>
+            <motion.div
+                initial={{ opacity: 0, y: 80, scale: 0.8, rotateX: 15 }}
+                animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                transition={{
+                    duration: 0.8,
+                    ease: [0.2, 0.8, 0.2, 1],
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 12
+                }}
+                className={`w-full md:w-3/5 ${theme.terminalBg} ${theme.terminalShadow} p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden border ${theme.terminalBorder}`}
+            >
                 <style>
                     {`
             @keyframes blinkCursor {
@@ -755,7 +787,8 @@ const TerminalPortfolio = () => {
                         </span>
                     </div>
                 </div>
-            </div>
+            </motion.div>
+
 
 
         </div>
