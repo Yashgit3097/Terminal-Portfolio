@@ -307,7 +307,7 @@ Tools & Others:
 
 ${Object.entries(themes).map(([key, theme]) => `• ${key} - ${theme.name}`).join('\n')}
 
-💡 Use "theme set [name]" to change theme`,
+💡 Use "theme [name]" to change theme`,
 
 
 };
@@ -433,18 +433,19 @@ const TerminalPortfolio = () => {
             return;
         }
 
-        if (lower.startsWith("theme set ")) {
-            const themeName = trimmed.slice(10).toLowerCase();
+        if (lower.startsWith("theme ")) {
+            const themeName = trimmed.slice(6).toLowerCase(); // changed from 10 to 6
             if (themes[themeName]) {
                 setCurrentTheme(themeName);
                 setHistory((prev) => [...prev, { cmd: trimmed, output: "" }]);
-                await simulateTyping(`Theme changed to ${themes[themeName].name}`);
+                await simulateTyping(`🎨 Theme changed to ${themes[themeName].name}`);
             } else {
                 setHistory((prev) => [...prev, { cmd: trimmed, output: "" }]);
                 await simulateTyping(`❌ Theme "${themeName}" not found. Type "themes" to see available themes.`);
             }
             return;
         }
+
 
         if (lower === "theme" || lower === "themes") {
             setHistory((prev) => [...prev, { cmd: trimmed, output: "" }]);
