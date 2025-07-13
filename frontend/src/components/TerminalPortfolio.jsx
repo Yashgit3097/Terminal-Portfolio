@@ -227,7 +227,7 @@ const themes = {
     }
 };
 const commands = {
-  help: `📖 Available Commands:
+    help: `📖 Available Commands:
 
 • about       → Know more about me
 • skills      → See my tech stack
@@ -240,13 +240,13 @@ const commands = {
 • themes      → List available themes
 • ascii       → Show a fun ASCII art`,
 
-  about: `👋 Hey, I'm Yash Gandhi.
+    about: `👋 Hey, I'm Yash Gandhi.
 
 I'm a passionate Full Stack Developer and Computer Science student who enjoys building meaningful digital experiences.
 
 Currently pursuing my Computer Science degree while working on exciting projects. I love solving real-world problems through code and always eager to learn new technologies!`,
 
-  skills: `💻 Tech Stack I Use:
+    skills: `💻 Tech Stack I Use:
 
 Frontend:
 • React.js, Next.js
@@ -266,7 +266,7 @@ Tools & Others:
 • Figma (UI/UX Design)
 • Postman, VS Code`,
 
-  projects: `🚀 Featured Projects:
+    projects: `🚀 Featured Projects:
 
 📱 PostX - Social Media App
 • MERN stack social platform
@@ -292,7 +292,7 @@ Tools & Others:
 • This interactive terminal interface
 • React + Framer Motion animations`,
 
-  contact: `📬 Get In Touch:
+    contact: `📬 Get In Touch:
 
 • Email: yash.gandhi@university.edu
 • GitHub: github.com/yashgandhi-dev
@@ -301,19 +301,15 @@ Tools & Others:
 
 💡 Open to internships, collaborations, and tech discussions. Let's connect!`,
 
-  date: new Date().toString(),
+    date: new Date().toString(),
 
-  themes: `🎨 Available Themes:
+    themes: `🎨 Available Themes:
 
 ${Object.entries(themes).map(([key, theme]) => `• ${key} - ${theme.name}`).join('\n')}
 
 💡 Use "theme set [name]" to change theme`,
 
-  ascii: `
-⊂(◉‿◉)つ
 
-YASH GANDHI
-`
 };
 
 const TerminalPortfolio = () => {
@@ -340,7 +336,7 @@ const TerminalPortfolio = () => {
     const GRAVITY = 0.4; // Reduced gravity for less swing
     const DAMPING = 0.99; // Higher damping for quicker stop
     const LENGTH = 100;
-    const MAX_ANGLE = 0.3; // Limit maximum swing angle (in radians)
+    const MAX_ANGLE = 0.5; // Limit maximum swing angle (in radians)
     const MIN_VELOCITY = 0.001;
 
     // Mouse tracking for subtle parallax effect
@@ -540,7 +536,7 @@ const TerminalPortfolio = () => {
                 {/* ID Card */}
                 <motion.div
                     ref={idCardRef}
-                    className="w-64 h-96 bg-white rounded-xl origin-top flex flex-col items-center justify-start overflow-hidden relative"
+                    className="w-64 h-99 bg-white rounded-xl origin-top flex flex-col items-center justify-start overflow-hidden relative"
                     animate={{
                         rotateZ: cardRotation,
                         rotateX: mousePos.y * 2,
@@ -649,27 +645,34 @@ const TerminalPortfolio = () => {
             <div className={`w-full md:w-3/5 ${theme.terminalBg} p-4 rounded-lg shadow-inner min-h-[80vh] font-mono overflow-hidden border ${theme.terminalBorder}`}>
                 <style>
                     {`
-                        @keyframes blinkCursor {
-                          0%, 49% { opacity: 1; }
-                          50%, 100% { opacity: 0; }
-                        }
-                        .blink-fast {
-                          animation: blinkCursor 0.7s step-end infinite;
-                        }
-                        .scrollbar-custom::-webkit-scrollbar {
-                          height: 6px;
-                          width: 8px;
-                        }
-                        .scrollbar-custom::-webkit-scrollbar-track {
-                          background: transparent;
-                        }
-                        .scrollbar-custom::-webkit-scrollbar-thumb {
-                          background-color: ${theme.output.border.replace('border-', '').split('-')[0]}-500;
-                          border-radius: 10px;
-                        }
-                    `}
+            @keyframes blinkCursor {
+              0%, 49% { opacity: 1; }
+              50%, 100% { opacity: 0; }
+            }
+            .blink-fast {
+              animation: blinkCursor 0.7s step-end infinite;
+            }
+            .scrollbar-custom::-webkit-scrollbar {
+              height: 6px;
+              width: 8px;
+            }
+            .scrollbar-custom::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            .scrollbar-custom::-webkit-scrollbar-thumb {
+              background-color: ${theme.output.border.replace('border-', '').split('-')[0]}-500;
+              border-radius: 10px;
+            }
+              @media (max-width: 640px) {
+  .terminal {
+    font-size: 0.875rem;
+    padding: 1rem;
+  }
+}
+        `}
                 </style>
 
+                {/* Top Header */}
                 <div className="flex items-center justify-between mb-2">
                     <h1 className={`text-lg ${theme.prompt.user}`}>~ Yash Terminal Portfolio</h1>
                     <div className="flex gap-1">
@@ -679,7 +682,7 @@ const TerminalPortfolio = () => {
                     </div>
                 </div>
 
-                {/* Terminal Output */}
+                {/* Terminal Output Section */}
                 <div className="flex-1 overflow-auto pr-2 scrollbar-custom" style={{ maxHeight: "calc(80vh - 80px)" }}>
                     <AnimatePresence>
                         {!clearing &&
@@ -692,15 +695,19 @@ const TerminalPortfolio = () => {
                                     transition={{ duration: 0.3 }}
                                     className="overflow-auto scrollbar-custom"
                                 >
+                                    {/* Command Line */}
                                     {entry.cmd && (
-                                        <p className={`${theme.text} overflow-x-auto scrollbar-custom`}>
-                                            <span className={theme.prompt.user}>Yash@portfolio</span>
-                                            <span className={theme.prompt.symbol}>:~</span>
-                                            <span className={theme.prompt.cursor}>$ </span>
-                                            <span className={theme.prompt.input}>{entry.cmd}</span>
-                                        </p>
+                                        <div className="overflow-x-auto whitespace-nowrap scrollbar-custom">
+                                            <p className={`${theme.text} inline-block`}>
+                                                <span className={theme.prompt.user}>Yash@portfolio</span>
+                                                <span className={theme.prompt.symbol}>:~</span>
+                                                <span className={theme.prompt.cursor}>$ </span>
+                                                <span className={theme.prompt.input}>{entry.cmd}</span>
+                                            </p>
+                                        </div>
                                     )}
-                                    <pre className={`whitespace-pre-wrap ${theme.output.text} ${theme.output.bg} border-l-4 ${theme.output.border} pl-3 pr-2 py-2 my-2 rounded-md`}>
+                                    {/* Output */}
+                                    <pre className={`whitespace-pre overflow-x-auto scrollbar-custom ${theme.output.text} ${theme.output.bg} border-l-4 ${theme.output.border} pl-3 pr-2 py-2 my-2 rounded-md`}>
                                         {entry.output}
                                     </pre>
                                 </motion.div>
@@ -710,11 +717,11 @@ const TerminalPortfolio = () => {
                 </div>
 
                 {/* Terminal Input */}
-                <div className="flex items-center mt-2 relative overflow-x-auto scrollbar-custom">
+                <div className="flex items-center mt-2 overflow-x-auto scrollbar-custom whitespace-nowrap">
                     <span className={`${theme.prompt.user} shrink-0`}>student@portfolio</span>
                     <span className={`${theme.prompt.symbol} shrink-0`}>:~</span>
                     <span className={`${theme.prompt.cursor} shrink-0`}>$ </span>
-                    <div className="relative flex-1">
+                    <div className="relative min-w-0 flex-1">
                         <input
                             type="text"
                             className="absolute inset-0 w-full h-full bg-transparent outline-none border-none caret-transparent"
@@ -724,14 +731,17 @@ const TerminalPortfolio = () => {
                             onKeyDown={handleKeyDown}
                             autoFocus
                         />
-                        <span className={theme.prompt.input}>
+                        <span className={`${theme.prompt.input}`}>
                             {input}
-                            <span className={`ml-[1px] w-[8px] h-[18px] inline-block align-middle blink-fast`}
-                                style={{ backgroundColor: theme.prompt.cursor.replace('text-', '').split('-')[0] }}></span>
+                            <span
+                                className={`ml-[1px] w-[8px] h-[18px] inline-block align-middle blink-fast`}
+                                style={{ backgroundColor: theme.prompt.cursor.replace('text-', '').split('-')[0] }}
+                            ></span>
                         </span>
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };
