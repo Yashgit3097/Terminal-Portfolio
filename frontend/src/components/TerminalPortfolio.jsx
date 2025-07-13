@@ -27,23 +27,23 @@ const themes = {
     },
     hacker: {
         name: "90s Hacker",
-        bg: "bg-gradient-to-br from-[#000000] to-[#0a0f0a]", // pure black to terminal green-black
-        text: "text-[#39ff14]", // classic hacker green
-        terminalBg: "bg-[#0b0f0b]/95", // deep greenish black
-        terminalBorder: "border-[#00ff00]/20", // glowing green edge
+        bg: "bg-gradient-to-br from-[#000000] to-[#0a0f0a]",
+        text: "text-[#39ff14]",
+        terminalBg: "bg-[#0b0f0b]/95",
+        terminalBorder: "border-[#00ff00]/20",
         prompt: {
-            user: "text-[#ff4d4d]",        // vibrant red username
-            symbol: "text-[#00cc00]",      // neon hacker green symbol
-            cursor: "text-[#39ff14]",      // brighter green cursor
-            input: "text-[#a0ffb0]"        // pale greenish input
+            user: "text-[#ff4d4d]",
+            symbol: "text-[#00cc00]",
+            cursor: "text-[#39ff14]",
+            input: "text-[#a0ffb0]"
         },
         output: {
-            bg: "bg-[#0e0f0e]/85",          // dark charcoal green tone
-            border: "border-[#ff4d4d]/40",  // soft hacker red border
-            text: "text-[#7fffd4]"          // light mint green for better readability
+            bg: "bg-[#0e0f0e]/85",
+            border: "border-[#ff4d4d]/40",
+            text: "text-[#7fffd4]"
         },
-        highlight: "text-[#ff6666]",        // bright warning red highlight
-        accent: "bg-[#ff4d4d]/10"           // hover or background warning glow
+        highlight: "text-[#ff6666]",
+        accent: "bg-[#ff4d4d]/10"
     },
     toxicgreenwave: {
         name: "Toxic Greenwave",
@@ -65,7 +65,6 @@ const themes = {
         highlight: "text-[#ccff33]",
         accent: "bg-[#ccff00]/10"
     },
-
     matrix: {
         name: "Digital Rain",
         bg: "bg-gradient-to-br from-black to-green-950",
@@ -193,20 +192,19 @@ const themes = {
         terminalBg: "bg-[#1c1c3c]/95",
         terminalBorder: "border-[#ff00c8]/30",
         prompt: {
-            user: "text-[#ffd700]",     // gold
-            symbol: "text-[#00ffff]",   // neon cyan
-            cursor: "text-[#ff4ff8]",   // hot pink
-            input: "text-[#ffe6fb]"     // soft pale pink
+            user: "text-[#ffd700]",
+            symbol: "text-[#00ffff]",
+            cursor: "text-[#ff4ff8]",
+            input: "text-[#ffe6fb]"
         },
         output: {
-            bg: "bg-[#1f1a3c]/80",        // dark indigo
+            bg: "bg-[#1f1a3c]/80",
             border: "border-[#ff4ff8]/30",
             text: "text-[#ffcaf7]"
         },
-        highlight: "text-[#00ffff]",     // bright neon blue
+        highlight: "text-[#00ffff]",
         accent: "bg-[#00ffff]/10"
-    }
-    ,
+    },
     neonwave: {
         name: "Neon Wave",
         bg: "bg-gradient-to-br from-black to-fuchsia-900",
