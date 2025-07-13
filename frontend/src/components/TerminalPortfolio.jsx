@@ -227,7 +227,7 @@ const themes = {
     }
 };
 const commands = {
-    help: `📖 Available Commands:
+  help: `📖 Available Commands:
 
 • about       → Know more about me
 • skills      → See my tech stack
@@ -237,15 +237,16 @@ const commands = {
 • echo [text] → Repeat your text
 • date        → Show current date & time
 • theme       → Change terminal theme (use: theme set [name])
-• themes      → List available themes`,
+• themes      → List available themes
+• ascii       → Show a fun ASCII art`,
 
-    about: `👋 Hey, I'm Yash Gandhi.
+  about: `👋 Hey, I'm Yash Gandhi.
 
 I'm a passionate Full Stack Developer and Computer Science student who enjoys building meaningful digital experiences.
 
 Currently pursuing my Computer Science degree while working on exciting projects. I love solving real-world problems through code and always eager to learn new technologies!`,
 
-    skills: `💻 Tech Stack I Use:
+  skills: `💻 Tech Stack I Use:
 
 Frontend:
 • React.js, Next.js
@@ -265,7 +266,7 @@ Tools & Others:
 • Figma (UI/UX Design)
 • Postman, VS Code`,
 
-    projects: `🚀 Featured Projects:
+  projects: `🚀 Featured Projects:
 
 📱 PostX - Social Media App
 • MERN stack social platform
@@ -291,7 +292,7 @@ Tools & Others:
 • This interactive terminal interface
 • React + Framer Motion animations`,
 
-    contact: `📬 Get In Touch:
+  contact: `📬 Get In Touch:
 
 • Email: yash.gandhi@university.edu
 • GitHub: github.com/yashgandhi-dev
@@ -300,13 +301,19 @@ Tools & Others:
 
 💡 Open to internships, collaborations, and tech discussions. Let's connect!`,
 
-    date: new Date().toString(),
+  date: new Date().toString(),
 
-    themes: `🎨 Available Themes:
+  themes: `🎨 Available Themes:
 
 ${Object.entries(themes).map(([key, theme]) => `• ${key} - ${theme.name}`).join('\n')}
 
-💡 Use "theme set [name]" to change theme`
+💡 Use "theme set [name]" to change theme`,
+
+  ascii: `
+⊂(◉‿◉)つ
+
+YASH GANDHI
+`
 };
 
 const TerminalPortfolio = () => {
